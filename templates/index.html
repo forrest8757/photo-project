@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drop Photos Here</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background-color: #f4f4f9;
+      }
+      .dropzone {
+        width: 300px;
+        height: 300px;
+        border: 3px dashed #ccc;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #999;
+        transition: all 0.3s ease-in-out;
+      }
+      .dropzone.dragover {
+        border-color: #333;
+        color: #333;
+      }
+      .start-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .start-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dropzone" id="dropzone">Drop files here</div>
+    <button class="start-button" id="start-button">Start Sort</button>
+
+    <script>
+      const dropzone = document.getElementById("dropzone");
+      const startButton = document.getElementById("start-button");
+
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.classList.add("dragover");
+      });
+
+      dropzone.addEventListener("dragleave", () => {
+        dropzone.classList.remove("dragover");
+      });
+
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("dragover");
+
+        const files = e.dataTransfer.files;
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          uploadFile(file);
+        }
+      });
+      startButton.addEventListener("click", () => {
+        fetch("/start-photos", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.message);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+
+      function uploadFile(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(
+              "File upload ${data.filename, data.message} successful"
+            );
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
