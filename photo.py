@@ -67,7 +67,8 @@ for item in contents:
     # open CV
 
     #TODO: extract text from image
-    # open cv might be able to do something
+    # checkout pytesseract an opencv for image text extraction
+    # https://www.geeksforgeeks.org/text-detection-and-extraction-using-opencv-and-ocr/#
 
     #TODO: extract location data if available
     # https://stackoverflow.com/questions/67037083/cant-get-gps-coordinates-from-from-exif-data-in-python-pillow-or-pyexiv2
