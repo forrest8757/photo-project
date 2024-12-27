@@ -67,7 +67,8 @@ for item in contents:
     # open CV
 
     #TODO: extract text from image
-    # checkout pytesseract an opencv for image text extraction
+    # checkout pytesseract an opencv for image text extraction, or maybe easyOCR
+    # https://stackoverflow.com/questions/78479905/extract-text-from-image-using-tessaract-and-opencv
     # https://www.geeksforgeeks.org/text-detection-and-extraction-using-opencv-and-ocr/#
 
     #TODO: extract location data if available
